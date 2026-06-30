@@ -1,16 +1,11 @@
 package com.kopontren.paylater.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kopontren.paylater.ui.dashboard.DashboardPlaceholderScreen
+import com.kopontren.paylater.ui.login.LoginScreen
 
 // Skema rute sesuai SDD.md §8 — destinasi screen akan diisi modul demi modul.
 sealed class Screen(val route: String) {
@@ -31,17 +26,23 @@ fun NavGraph() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.Login.route) {
         composable(Screen.Login.route) {
-            // TODO: LoginScreen — belum diimplementasikan, menunggu konfirmasi modul.
-            ScaffoldPlaceholder("Kerangka proyek siap — modul Login belum diimplementasikan")
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Screen.Dashboard.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                }
+            )
         }
-    }
-}
-
-@Composable
-private fun ScaffoldPlaceholder(label: String) {
-    Scaffold { padding ->
-        Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-            Text(label)
+        composable(Screen.Dashboard.route) {
+            // Placeholder QA modul Login — Dashboard sungguhan (SRS.md §5.2) belum diimplementasikan.
+            DashboardPlaceholderScreen(
+                onLoggedOut = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Dashboard.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }
