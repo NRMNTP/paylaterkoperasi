@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Theme XML hanya jadi jembatan startup Android; theming sesungguhnya
+         didefinisikan native di ui/theme/Theme.kt (Jetpack Compose), lihat SDD.md §2.3 -->
+    <style name="Theme.PayLaterKoperasi" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
